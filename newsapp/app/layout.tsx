@@ -27,7 +27,46 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col bg-zinc-50 dark:bg-black">
+        <Header />
+        <main className="flex-1 w-full max-w-6xl mx-auto px-4 py-6">{children}</main>
+        <Footer />
+      </body>
     </html>
+  );
+}
+
+function Header() {
+  return (
+    <header className="w-full border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-black sticky top-0 z-50">
+      <nav className="flex items-center justify-between max-w-6xl mx-auto px-4 py-4">
+        <div className="flex items-center gap-4">
+          <span className="font-bold text-lg tracking-tight">Vercel Daily</span>
+          <a href="/" className="text-zinc-700 dark:text-zinc-200 hover:underline">Home</a>
+          <a href="/search" className="text-zinc-700 dark:text-zinc-200 hover:underline">Search</a>
+        </div>
+        <SubscriptionIndicator />
+      </nav>
+    </header>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className="w-full border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-black py-4 mt-8">
+      <div className="max-w-6xl mx-auto px-4 text-center text-sm text-zinc-500 dark:text-zinc-400">
+        &copy; {new Date().getFullYear()} Vercel Daily. All rights reserved.
+      </div>
+    </footer>
+  );
+}
+
+function SubscriptionIndicator() {
+  // Placeholder for subscription status UI
+  return (
+    <span className="inline-flex items-center gap-2 text-sm text-zinc-700 dark:text-zinc-200">
+      <span className="hidden sm:inline">Not Subscribed</span>
+      <button className="ml-2 px-3 py-1 rounded bg-black text-white dark:bg-white dark:text-black font-medium hover:opacity-80 transition">Subscribe</button>
+    </span>
   );
 }
