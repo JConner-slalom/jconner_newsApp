@@ -33,10 +33,6 @@ export default function Home() {
           <p className="text-lg text-zinc-600 dark:text-zinc-400 mb-6 max-w-xl">
             Changelogs, engineering deep dives, customer stories, and community updates — all in one place.
           </p>
-          <div className="flex gap-4">
-            <a href="/search" className="px-5 py-2 rounded bg-black text-white dark:bg-white dark:text-black font-medium hover:opacity-80 transition">Browse articles</a>
-            <button className="px-5 py-2 rounded border border-black dark:border-white font-medium hover:bg-zinc-100 dark:hover:bg-zinc-900 transition">Subscribe</button>
-          </div>
         </div>
         <div className="flex-1 flex justify-center md:justify-end">
           <Suspense fallback={<div className="w-72 h-44 bg-zinc-200 animate-pulse rounded-lg" /> }>

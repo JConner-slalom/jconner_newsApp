@@ -1,4 +1,5 @@
 import { fetchArticleById } from "../../lib/api";
+import ArticleSubButton from "./articleSubButton";
 
 interface ArticleContentBlock {
   type: string;
@@ -22,7 +23,7 @@ interface ArticleData {
   tags: string[];
 }
 
-export default async function ArticlePageDetail({ id }: { id: string }) {
+export default async function ArticlePageDetailUnsubscribed({ id }: { id: string }) {
   let article: ArticleData | null = null;
   try {
     const res = await fetchArticleById(id);
@@ -55,9 +56,7 @@ export default async function ArticlePageDetail({ id }: { id: string }) {
         </span>
       </div>
       <div className="space-y-4">
-        {article.content?.map((block, idx) => (
-          <p key={idx}>{block.text}</p>
-        ))}
+        <p>{article.excerpt}</p>
       </div>
       {article.tags?.length > 0 && (
         <div className="mt-6 flex flex-wrap gap-2">
@@ -66,6 +65,9 @@ export default async function ArticlePageDetail({ id }: { id: string }) {
           ))}
         </div>
       )}
+      <div className="flex justify-center mt-8">
+        <ArticleSubButton />
+      </div>
     </article>
   );
 }
