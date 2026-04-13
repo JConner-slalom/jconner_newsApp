@@ -2,6 +2,7 @@
 
 import { Suspense } from "react";
 import { fetchBreakingNews, fetchFeaturedArticles } from "../lib/api";
+import ArticlesGridDisplay from "./components/articlesGridDisplay";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -51,6 +52,10 @@ export default function Home() {
   );
 }
 
+function BreakingNewsSkeleton() {
+  return <div className="w-full h-10 bg-zinc-200 animate-pulse rounded mb-4" />;
+}
+
 async function BreakingNewsSection() {
   let breakingNews: any[] = [];
   try {
@@ -75,41 +80,6 @@ async function FeaturedHeroImage() {
   );
 }
 
-async function FeaturedArticlesSection() {
-  let featured: any[] = [];
-  try {
-    featured = await fetchFeaturedArticles();
-  } catch {}
-  return (
-    <section className="mt-8">
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-semibold">Featured</h2>
-        <a href="/search" className="text-sm text-zinc-500 hover:underline">View all</a>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {featured.length > 0 ? (
-          featured.slice(0, 6).map((article: any) => (
-            <ArticleCard
-              key={article.id}
-              image={article.image || "/pro-plan.png"}
-              category={article.category}
-              date={new Date(article.publishDate).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" })}
-              title={article.headline}
-              href={`/articles/${article.id}`}
-              excerpt={article.excerpt || article.summary || ""}
-            />
-          ))
-        ) : (
-          <div className="col-span-3 text-center text-zinc-500">No featured articles found.</div>
-        )}
-      </div>
-    </section>
-  );
-}
-
-function BreakingNewsSkeleton() {
-  return <div className="w-full h-10 bg-zinc-200 animate-pulse rounded mb-4" />;
-}
 
 function FeaturedArticlesSkeleton() {
   return (
@@ -127,20 +97,10 @@ function FeaturedArticlesSkeleton() {
   );
 }
 
-function ArticleCard({ image, category, date, title, href, excerpt }: {
-  image: string;
-  category: string;
-  date: string;
-  title: string;
-  href: string;
-  excerpt: string;
-}) {
-  return (
-    <a href={href} className="block rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-4 hover:shadow-lg transition">
-      <img src={image} alt={title} className="w-full h-32 object-cover rounded mb-3" />
-      <div className="text-xs text-zinc-500 mb-1 uppercase tracking-wide">{category} • {date}</div>
-      <div className="font-semibold text-lg mb-1 line-clamp-2">{title}</div>
-      <div className="text-sm text-zinc-600 dark:text-zinc-400 line-clamp-2">{excerpt}</div>
-    </a>
-  );
+async function FeaturedArticlesSection() {
+  let featured: any[] = [];
+  try {
+    featured = await fetchFeaturedArticles();
+  } catch {}
+  return <ArticlesGridDisplay featured={featured} />;
 }
