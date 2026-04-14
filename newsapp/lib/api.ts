@@ -1,9 +1,8 @@
 // lib/api.ts
 // Utility functions for fetching news data from the Vercel Daily News API
 
-
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || "https://vercel-daily-news-api.vercel.app/api";
-const API_BYPASS = process.env.NEXT_PUBLIC_API_BYPASS_TOKEN || "";
+const API_BASE = "https://vercel-daily-news-api.vercel.app/api";
+const API_BYPASS = "OykROcuULI6YJwAwk3VnWv4gMMbpAq6q"; // Replace with your provided token if needed
 
 export async function fetchFeaturedArticles() {
   const res = await fetch(`${API_BASE}/articles?featured=true`, {
@@ -46,12 +45,12 @@ export async function fetchTrendingArticles() {
 }
 
 export async function searchArticles(query: string, category?: string) {
-  const params = new URLSearchParams({ q: query });
-  if (category) params.append("category", category);
-  const res = await fetch(`${API_BASE}/articles/search?${params.toString()}`, {
-    headers: { "x-vercel-protection-bypass": API_BYPASS },
-    next: { revalidate: 10 },
-  });
+  const params = new URLSearchParams();
+  params.set("search", query || "");
+  if (category) params.set("category", category);
+  const url = `/api/articles?${params.toString()}`;
+  console.log("searchArticles params", url);
+  const res = await fetch(url);
   if (!res.ok) throw new Error("Failed to search articles");
   const data = await res.json();
   return data.data;
