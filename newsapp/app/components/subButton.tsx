@@ -1,22 +1,20 @@
-import { useEffect, useState } from "react";
+import { useSubscription } from "@/app/context/subscriptionContext";
+import { useRouter } from "next/navigation";
 
 export default function SubscriptionIndicator() {
-  const [subscribed, setSubscribed] = useState(false);
-
-  useEffect(() => {
-    // Check cookie on mount
-    const match = document.cookie.match(/(?:^|; )subscribed=([^;]*)/);
-    setSubscribed(match?.[1] === "true");
-  }, []);
+  const { subscribed, setSubscribed } = useSubscription();
+  const router = useRouter();
 
   const handleSubscribe = () => {
     document.cookie = `subscribed=true; path=/; max-age=31536000`;
     setSubscribed(true);
+    router.refresh();
   };
 
   const handleUnsubscribe = () => {
     document.cookie = `subscribed=false; path=/; max-age=31536000`;
     setSubscribed(false);
+    router.refresh();
   };
 
   return (

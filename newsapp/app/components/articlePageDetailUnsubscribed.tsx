@@ -68,6 +68,7 @@ export default async function ArticlePageDetailUnsubscribed({ id }: { id: string
       <div className="flex justify-center mt-8">
         <ArticleSubButton />
       </div>
+
     </article>
   );
 }

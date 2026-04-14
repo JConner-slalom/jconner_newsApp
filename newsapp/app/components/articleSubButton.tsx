@@ -1,8 +1,11 @@
 'use client';
 import { useEffect, useState } from "react";
+import { useSubscription } from "@/app/context/subscriptionContext";
+import { useRouter } from "next/navigation";
 
 export default function ArticleSubButton() {
-  const [subscribed, setSubscribed] = useState(false);
+  const { subscribed, setSubscribed } = useSubscription();
+  const router = useRouter();
 
   useEffect(() => {
     // Check cookie on mount
@@ -13,6 +16,7 @@ export default function ArticleSubButton() {
   const handleSubscribe = () => {
     document.cookie = `subscribed=true; path=/; max-age=31536000`;
     setSubscribed(true);
+    router.refresh();
   };
 
   return (

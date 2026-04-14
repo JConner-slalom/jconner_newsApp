@@ -3,9 +3,7 @@
 import { Suspense } from "react";
 import { fetchTrendingArticles } from "../../../lib/api";
 import ArticlesGridDisplay from "@/app/components/articlesGridDisplay";
-import ArticlesPageDetail from "@/app/components/articlePageDetail";
-import ArticlePageDetailUnsubscribed from "@/app/components/articlePageDetailUnsubscribed";
-import cookieCheck from "@/app/components/cookieCheck";
+import ArticleDetail from "@/app/components/articleDetail";
 
 
 
@@ -36,17 +34,6 @@ function ArticleDetailSkeleton() {
       <div className="h-4 w-3/6 bg-zinc-200 rounded" />
     </div>
   );
-}
-
-async function ArticleDetail({ id }: { id: string }) {
-  console.log("Rendering ArticleDetail for id:", id);
-
-  const subscribed = await cookieCheck();
-  if (!subscribed) {
-    return <ArticlePageDetailUnsubscribed id={id} />;
-  } else {
-    return <ArticlesPageDetail id={id} />;
-  }
 }
 
 function TrendingArticlesSkeleton() {
