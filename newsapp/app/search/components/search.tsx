@@ -1,9 +1,11 @@
 "use client";
-import { Suspense, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { searchArticles } from "../../../lib/api";
 import ArticlesGridDisplay from "@/app/search/components/articlesGridDisplay";
-import TrendingArticlesSection from "@/app/search/components/trendingArticles";
+import SearchInput from "@/app/search/components/SearchInput";
+import CategorySelect from "@/app/search/components/CategorySelect";
+import SearchButton from "@/app/search/components/SearchButton";
 
 
 const CATEGORIES = [
@@ -104,33 +106,19 @@ export default function SearchComponent() {
   return (
     <div>
       <form className="flex flex-col sm:flex-row gap-3 items-stretch" onSubmit={handleSearch}>
-        <input
-          type="text"
-          className="flex-1 border border-zinc-300 dark:border-zinc-700 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Search for articles..."
+        <SearchInput
           value={query}
           onChange={handleInput}
-          minLength={0}
-          onKeyDown={(e) => {
+          onEnter={(e) => {
             if (e.key === "Enter") handleSearch(e);
           }}
         />
-        <select
-          className="border border-zinc-300 dark:border-zinc-700 rounded px-4 py-2 bg-white dark:bg-zinc-900"
+        <CategorySelect
           value={category}
           onChange={handleCategory}
-        >
-          {CATEGORIES.map((cat) => (
-            <option key={cat} value={cat}>{cat}</option>
-          ))}
-        </select>
-        <button
-          type="submit"
-          className="px-6 py-2 rounded bg-black text-white dark:bg-white dark:text-black font-medium hover:opacity-80 transition"
-          disabled={loading}
-        >
-          Search
-        </button>
+          categories={CATEGORIES}
+        />
+        <SearchButton loading={loading} />
       </form>
 
       {loading && (
