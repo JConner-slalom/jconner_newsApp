@@ -52,15 +52,15 @@ function BreakingNewsSkeleton() {
 }
 
 async function BreakingNewsSection() {
-    let breakingNews: any[] = [];
+    let breakingNews: any = null;
     try {
         breakingNews = await fetchBreakingNews();
     } catch {}
-    if (!breakingNews.length) return null;
+    if (!breakingNews) return null;
     return (
         <div className="w-full bg-black text-white py-2 px-4 rounded mb-4 flex items-center gap-2">
             <span className="font-bold text-xs bg-red-600 px-2 py-1 rounded mr-2">BREAKING</span>
-            <span>{breakingNews[0].headline}</span>
+            <span>{breakingNews.headline}</span>
         </div>
     );
 }

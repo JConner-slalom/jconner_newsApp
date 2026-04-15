@@ -15,13 +15,18 @@ export async function fetchFeaturedArticles() {
 }
 
 export async function fetchBreakingNews() {
-    const res = await fetch(`${API_BASE}/articles/trending`, {
-        headers: { "x-vercel-protection-bypass": API_BYPASS },
-        next: { revalidate: 30 },
-    });
-    if (!res.ok) throw new Error("Failed to fetch breaking news");
-    const data = await res.json();
-    return data.data;
+    try {
+        const res = await fetch(`${API_BASE}/breaking-news`, {
+            headers: { "x-vercel-protection-bypass": API_BYPASS },
+            next: { revalidate: 30 },
+        });
+        if (!res.ok) throw new Error("Failed to fetch breaking news");
+        const data = await res.json();
+        return data.data;
+    } catch (error) {
+        console.error("fetchBreakingNews error", error);
+        throw error;
+    }
 }
 
 export async function fetchArticleById(id: string) {
