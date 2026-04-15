@@ -5,58 +5,58 @@ import SubscriptionIndicator from "./components/subButton";
 import { SubscriptionProvider } from "./context/subscriptionContext";
 
 const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+    variable: "--font-geist-sans",
+    subsets: ["latin"],
 });
 
 const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+    variable: "--font-geist-mono",
+    subsets: ["latin"],
 });
 
 
 export default function RootLayout({
-  children,
+    children,
 }: Readonly<{
-  children: React.ReactNode;
+    children: React.ReactNode;
 }>) {
-  return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col bg-zinc-50 dark:bg-black">
-        <SubscriptionProvider>
-          <Header />
-          <main className="flex-1 w-full max-w-6xl mx-auto px-4 py-6">{children}</main>
-          <Footer />
-        </SubscriptionProvider>
-      </body>
-    </html>
-  );
+    return (
+        <html
+            lang="en"
+            className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+        >
+            <body className="min-h-full flex flex-col bg-zinc-50 dark:bg-black">
+                <SubscriptionProvider>
+                    <Header />
+                    <main className="flex-1 w-full max-w-6xl mx-auto px-4 py-6">{children}</main>
+                    <Footer />
+                </SubscriptionProvider>
+            </body>
+        </html>
+    );
 }
 
 function Header() {
-  return (
-    <header className="w-full border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-black sticky top-0 z-50">
-      <nav className="flex items-center justify-between max-w-6xl mx-auto px-4 py-4">
-        <div className="flex items-center gap-4">
-          <span className="font-bold text-lg tracking-tight">Vercel Daily</span>
-          <a href="/" className="text-zinc-700 dark:text-zinc-200 hover:underline">Home</a>
-          <a href="/search" className="text-zinc-700 dark:text-zinc-200 hover:underline">Search</a>
-        </div>
-        <SubscriptionIndicator />
-      </nav>
-    </header>
-  );
+    return (
+        <header className="w-full border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-black sticky top-0 z-50">
+            <nav className="flex items-center justify-between max-w-6xl mx-auto px-4 py-4">
+                <div className="flex items-center gap-4">
+                    <span className="font-bold text-lg tracking-tight">Vercel Daily</span>
+                    <a href="/" className="text-zinc-700 dark:text-zinc-200 hover:underline">Home</a>
+                    <a href="/search" className="text-zinc-700 dark:text-zinc-200 hover:underline">Search</a>
+                </div>
+                <SubscriptionIndicator />
+            </nav>
+        </header>
+    );
 }
 
 function Footer() {
-  return (
-    <footer className="w-full border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-black py-4 mt-8">
-      <div className="max-w-6xl mx-auto px-4 text-center text-sm text-zinc-500 dark:text-zinc-400">
-        &copy; {new Date().getFullYear()} Vercel Daily. All rights reserved.
-      </div>
-    </footer>
-  );
+    return (
+        <footer className="w-full border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-black py-4 mt-8">
+            <div className="max-w-6xl mx-auto px-4 text-center text-sm text-zinc-500 dark:text-zinc-400">
+                &copy; {new Date().getFullYear()} Vercel Daily. All rights reserved.
+            </div>
+        </footer>
+    );
 }

@@ -9,138 +9,145 @@ import SearchButton from "@/app/search/components/SearchButton";
 
 
 const CATEGORIES = [
-  "Select Category",
-  "customers",
-  "community",
-  "company-news",
-  "changelog",
-  "engineering",
+    "Select Category",
+    "customers",
+    "community",
+    "company-news",
+    "changelog",
+    "engineering",
 ];
 
 export default function SearchComponent() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const [query, setQuery] = useState(() => searchParams.get("q") || "");
-  const [category, setCategory] = useState(() => searchParams.get("category") || "All");
-  const [results, setResults] = useState<any[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [hasSearched, setHasSearched] = useState(() => !!searchParams.get("q") || !!searchParams.get("category"));
-  const debounceRef = useRef<NodeJS.Timeout | null>(null);
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const [query, setQuery] = useState(getInitialQuery);
+    const [category, setCategory] = useState(getInitialCategory);
+    const [results, setResults] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
+    const [hasSearched, setHasSearched] = useState(getInitialHasSearched);
+    const debounce = useRef<number | null>(null);
 
-  // Sync state with URL
-  useEffect(() => {
-    const params = new URLSearchParams();
-    if (query) params.set("q", query);
-    if (category && category !== "All") params.set("category", category);
-    const paramStr = params.toString();
-    router.replace(`/search?${paramStr}`);
-  }, [query, category, router]);
 
-  // Perform search when query/category changes
-  useEffect(() => {
-    if (!query && (!category || category === "All")) {
-      setHasSearched(false);
-      setResults([]);
-      setError("");
-      return;
+    function getInitialQuery() {
+        return searchParams.get("q") || "";
     }
-    setHasSearched(true);
-    setLoading(true);
-    setError("");
-    if (debounceRef.current) clearTimeout(debounceRef.current);
-    debounceRef.current = setTimeout(() => {
-      if (query.length >= 3 || (query.length === 0 && category !== "Select Category")) {
+    function getInitialCategory() {
+        return searchParams.get("category") || "Select Category";
+    }
+
+    function getInitialHasSearched() {
+        return !!searchParams.get("q") || !!searchParams.get("category");
+    }
+    // Sync state with URL
+    useEffect(() => {
+        const params = new URLSearchParams();
+        if (query) params.set("q", query);
+        if (category && category !== "Select Category") params.set("category", category);
+        const paramStr = params.toString();
+        router.replace(`/search?${paramStr}`);
+    }, [query, category, router]);
+
+    // Perform search when query/category changes
+    useEffect(() => {
+        if (!query && (!category || category === "Select Category")) {
+            setHasSearched(false);
+            setResults([]);
+            setError("");
+            return;
+        }
+        setHasSearched(true);
+        setLoading(true);
+        setError("");
+        if (debounce.current) clearTimeout(debounce.current);
+        debounce.current = window.setTimeout(() => {
+            if (query.length >= 3 || (query.length === 0 && category !== "Select Category")) {
+                searchArticles(query, category && category !== "Select Category" ? category : undefined)
+                .then((res) => {
+                    console.log("searchArticles response", res);
+                    setResults(res ? res.slice(0, 5) : []);
+                    setLoading(false);
+                })
+                .catch(() => {
+                    setResults([]);
+                    setError("Failed to fetch search results.");
+                    setLoading(false);
+                });
+            } else {
+                setResults([]);
+                setLoading(false);
+                setError("");
+            }
+        }, query.length >= 3 ? 350 : 0);
+    }, [query, category]);
+
+
+    const handleInput = (value: string) => {
+        setQuery(value);
+    };
+
+    const handleCategory = (value: string) => {
+        setCategory(value);
+    };
+
+    function handleSearch() {
+        if (query.length === 0 && (category === "Select Category" || !category)) {
+            setHasSearched(false);
+            setResults([]);
+            setError("");
+            return;
+        }
+        setHasSearched(true);
+        setLoading(true);
+        setError("");
         searchArticles(query, category && category !== "Select Category" ? category : undefined)
-          .then((res) => {
-            console.log("searchArticles response", res);
+        .then((res) => {
             setResults(res ? res.slice(0, 5) : []);
             setLoading(false);
-          })
-          .catch(() => {
+        })
+        .catch(() => {
             setResults([]);
             setError("Failed to fetch search results.");
             setLoading(false);
-          });
-      } else {
-        setResults([]);
-        setLoading(false);
-        setError("");
-      }
-    }, query.length >= 3 ? 350 : 0);
-    // Only debounce if query is at least 3 chars
-    // Otherwise, search immediately for category-only filter
-  }, [query, category]);
-
-  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setQuery(e.target.value);
-  };
-
-  const handleCategory = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setCategory(e.target.value);
-  };
-
-  const handleSearch = (e?: React.FormEvent) => {
-    if (e) e.preventDefault();
-    if (query.length === 0 && (category === "Select Category" || !category)) {
-      setHasSearched(false);
-      setResults([]);
-      setError("");
-      return;
+        });
     }
-    setHasSearched(true);
-    setLoading(true);
-    setError("");
-    searchArticles(query, category && category !== "Select Category" ? category : undefined)
-      .then((res) => {
-        setResults(res ? res.slice(0, 5) : []);
-        setLoading(false);
-      })
-      .catch(() => {
-        setResults([]);
-        setError("Failed to fetch search results.");
-        setLoading(false);
-      });
-  };
 
-  return (
-    <div>
-      <form className="flex flex-col sm:flex-row gap-3 items-stretch" onSubmit={handleSearch}>
-        <SearchInput
-          value={query}
-          onChange={handleInput}
-          onEnter={(e) => {
-            if (e.key === "Enter") handleSearch(e);
-          }}
-        />
-        <CategorySelect
-          value={category}
-          onChange={handleCategory}
-          categories={CATEGORIES}
-        />
-        <SearchButton loading={loading} />
-      </form>
+    return (
+        <div>
+        <form className="flex flex-col sm:flex-row gap-3 items-stretch" onSubmit={e => { e.preventDefault(); handleSearch(); }}>
+            <SearchInput
+                value={query}
+                onChange={handleInput}
+                onEnter={handleSearch}
+            />
+            <CategorySelect
+                value={category}
+                onChange={handleCategory}
+                categories={CATEGORIES}
+            />
+            <SearchButton loading={loading} />
+        </form>
 
-      {loading && (
-        <div className="text-center text-zinc-500 py-8">Loading...</div>
-      )}
+        {loading && (
+            <div className="text-center text-zinc-500 py-8">Loading...</div>
+        )}
 
-      {!loading && error && (
-        <div className="text-center text-red-500 py-8">{error}</div>
-      )}
+        {!loading && error && (
+            <div className="text-center text-red-500 py-8">{error}</div>
+        )}
 
-      {!loading && hasSearched && !error && results.length === 0 && (
-        <div className="text-center text-zinc-500 py-8">No articles found for your search.</div>
-      )}
+        {!loading && hasSearched && !error && results.length === 0 && (
+            <div className="text-center text-zinc-500 py-8">No articles found for your search.</div>
+        )}
 
-      {!loading && hasSearched && results.length > 0 && (
-        <ArticlesGridDisplay featured={results} />
-      )}
+        {!loading && hasSearched && results.length > 0 && (
+            <ArticlesGridDisplay featured={results} />
+        )}
 
-      {/* {!loading && !hasSearched && (
-        <TrendingArticlesSection />
-      )} */}
-    </div>
-  );
+        {/* {!loading && !hasSearched && (
+            <TrendingArticlesSection />
+        )} */}
+        </div>
+    );
 }
 

@@ -47,7 +47,7 @@ export async function fetchTrendingArticles() {
 export async function searchArticles(query: string, category?: string) {
   const params = new URLSearchParams();
   params.set("search", query || "");
-  if (category) params.set("category", category);
+  if (category && category !== "Select Category") params.set("category", category);
   const url = `/api/articles?${params.toString()}`;
   console.log("searchArticles params", url);
   const res = await fetch(url);
