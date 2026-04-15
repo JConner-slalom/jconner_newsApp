@@ -1,9 +1,8 @@
 import React from "react";
 
-interface SearchButtonProps {
+type SearchButtonProps = {
 	loading: boolean;
 }
-
 
 function SearchButton({ loading }: SearchButtonProps) {
 	return (
