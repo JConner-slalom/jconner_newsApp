@@ -4,18 +4,11 @@ import { useSubscription } from "@/app/context/subscriptionContext";
 import { useRouter } from "next/navigation";
 
 export default function ArticleSubButton() {
-  const { subscribed, setSubscribed } = useSubscription();
+  const { subscribed, subscribe } = useSubscription();
   const router = useRouter();
 
-  useEffect(() => {
-    // Check cookie on mount
-    const match = document.cookie.match(/(?:^|; )subscribed=([^;]*)/);
-    setSubscribed(match?.[1] === "true");
-  }, []);
-
   const handleSubscribe = () => {
-    document.cookie = `subscribed=true; path=/; max-age=31536000`;
-    setSubscribed(true);
+    subscribe();
     router.refresh();
   };
 

@@ -2,18 +2,16 @@ import { useSubscription } from "@/app/context/subscriptionContext";
 import { useRouter } from "next/navigation";
 
 export default function SubscriptionIndicator() {
-  const { subscribed, setSubscribed } = useSubscription();
+  const { subscribed, subscribe, unsubscribe } = useSubscription();
   const router = useRouter();
 
   const handleSubscribe = () => {
-    document.cookie = `subscribed=true; path=/; max-age=31536000`;
-    setSubscribed(true);
+    subscribe();
     router.refresh();
   };
 
   const handleUnsubscribe = () => {
-    document.cookie = `subscribed=false; path=/; max-age=31536000`;
-    setSubscribed(false);
+    unsubscribe();
     router.refresh();
   };
 
