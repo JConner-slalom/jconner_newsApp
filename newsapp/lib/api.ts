@@ -5,53 +5,62 @@ const API_BASE = "https://vercel-daily-news-api.vercel.app/api";
 const API_BYPASS = "OykROcuULI6YJwAwk3VnWv4gMMbpAq6q"; // Replace with your provided token if needed
 
 export async function fetchFeaturedArticles() {
-  const res = await fetch(`${API_BASE}/articles?featured=true`, {
-    headers: { "x-vercel-protection-bypass": API_BYPASS },
-    next: { revalidate: 60 },
-  });
-  if (!res.ok) throw new Error("Failed to fetch featured articles");
-  const data = await res.json();
-  return data.data;
+    const res = await fetch(`${API_BASE}/articles?featured=true`, {
+        headers: { "x-vercel-protection-bypass": API_BYPASS },
+        next: { revalidate: 60 },
+    });
+    if (!res.ok) throw new Error("Failed to fetch featured articles");
+    const data = await res.json();
+    return data.data;
 }
 
 export async function fetchBreakingNews() {
-  const res = await fetch(`${API_BASE}/articles/trending`, {
-    headers: { "x-vercel-protection-bypass": API_BYPASS },
-    next: { revalidate: 30 },
-  });
-  if (!res.ok) throw new Error("Failed to fetch breaking news");
-  const data = await res.json();
-  return data.data;
+    const res = await fetch(`${API_BASE}/articles/trending`, {
+        headers: { "x-vercel-protection-bypass": API_BYPASS },
+        next: { revalidate: 30 },
+    });
+    if (!res.ok) throw new Error("Failed to fetch breaking news");
+    const data = await res.json();
+    return data.data;
 }
 
 export async function fetchArticleById(id: string) {
-  const res = await fetch(`${API_BASE}/articles/${id}`, {
-    headers: { "x-vercel-protection-bypass": API_BYPASS },
-    next: { revalidate: 60 },
-  });
-  if (!res.ok) throw new Error("Failed to fetch article");
-  const data = await res.json();
-  return data.data;
+    const res = await fetch(`${API_BASE}/articles/${id}`, {
+        headers: { "x-vercel-protection-bypass": API_BYPASS },
+        next: { revalidate: 60 },
+    });
+    if (!res.ok) throw new Error("Failed to fetch article");
+    const data = await res.json();
+    return data.data;
 }
 
 export async function fetchTrendingArticles() {
-  const res = await fetch(`${API_BASE}/articles/trending`, {
-    headers: { "x-vercel-protection-bypass": API_BYPASS },
-    next: { revalidate: 30 },
-  });
-  if (!res.ok) throw new Error("Failed to fetch trending articles");
-  const data = await res.json();
-  return data.data;
+    const res = await fetch(`${API_BASE}/articles/trending`, {
+        headers: { "x-vercel-protection-bypass": API_BYPASS },
+        next: { revalidate: 30 },
+    });
+    if (!res.ok) throw new Error("Failed to fetch trending articles");
+    const data = await res.json();
+    return data.data;
+}
+
+export async function fetchTrendingArticlesSearch() {
+    const url = "/api/articles/trending";
+    console.log("fetchTrendingArticlesSearch url", url);
+    const res = await fetch(url);
+    if (!res.ok) throw new Error("Failed to fetch trending articles");
+    const data = await res.json();
+    return data.data;
 }
 
 export async function searchArticles(query: string, category?: string) {
-  const params = new URLSearchParams();
-  params.set("search", query || "");
-  if (category && category !== "Select Category") params.set("category", category);
-  const url = `/api/articles?${params.toString()}`;
-  console.log("searchArticles params", url);
-  const res = await fetch(url);
-  if (!res.ok) throw new Error("Failed to search articles");
-  const data = await res.json();
-  return data.data;
+    const params = new URLSearchParams();
+    params.set("search", query || "");
+    if (category && category !== "Select Category") params.set("category", category);
+    const url = `/api/articles?${params.toString()}`;
+    console.log("searchArticles params", url);
+    const res = await fetch(url);
+    if (!res.ok) throw new Error("Failed to search articles");
+    const data = await res.json();
+    return data.data;
 }

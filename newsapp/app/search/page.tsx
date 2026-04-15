@@ -1,4 +1,3 @@
-import { Suspense } from "react";
 import Search from "@/app/search/components/search";
 
 export default function SearchPage() {

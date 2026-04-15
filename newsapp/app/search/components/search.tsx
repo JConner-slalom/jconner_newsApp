@@ -6,6 +6,7 @@ import ArticlesGridDisplay from "@/app/search/components/articlesGridDisplay";
 import SearchInput from "@/app/search/components/SearchInput";
 import CategorySelect from "@/app/search/components/CategorySelect";
 import SearchButton from "@/app/search/components/SearchButton";
+import TrendingArticlesSection from "@/app/search/components/trendingArticles";
 
 
 const CATEGORIES = [
@@ -144,9 +145,9 @@ export default function SearchComponent() {
             <ArticlesGridDisplay featured={results} />
         )}
 
-        {/* {!loading && !hasSearched && (
+        {!loading && !hasSearched && (
             <TrendingArticlesSection />
-        )} */}
+        )}
         </div>
     );
 }
