@@ -28,9 +28,9 @@ export default function Home() {
 
             <section className="flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-16 py-8">
                 <div className="flex-1">
-                    <h1 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">News and insights for modern web developers.</h1>
+                    <h1 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">JC News in partnership with Vercel</h1>
                     <p className="text-lg text-zinc-600 dark:text-zinc-400 mb-6 max-w-xl">
-                      Changelogs, engineering deep dives, customer stories, and community updates — all in one place.
+                      News you can trust, quick reads and detailed coverage for what matters to you
                     </p>
                 </div>
                 <div className="flex-1 flex justify-center md:justify-end">

@@ -2,6 +2,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import SubscriptionIndicator from "./components/subButton";
+import Link from "next/link";
 import { SubscriptionProvider } from "./context/subscriptionContext";
 import { Suspense } from "react";
 
@@ -44,9 +45,11 @@ function Header() {
         <header className="w-full border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-black sticky top-0 z-50">
             <nav className="flex items-center justify-between max-w-6xl mx-auto px-4 py-4">
                 <div className="flex items-center gap-4">
-                    <span className="font-bold text-lg tracking-tight">Vercel Daily</span>
-                    <a href="/" className="text-zinc-700 dark:text-zinc-200 hover:underline">Home</a>
-                    <a href="/search" className="text-zinc-700 dark:text-zinc-200 hover:underline">Search</a>
+                    <Link href="/" className="flex items-center">
+                        <img src="/jc.svg" alt="JC Logo" className="h-7 w-auto" />
+                    </Link>
+                    <Link href="/" className="text-zinc-700 dark:text-zinc-200 hover:underline">Home</Link>
+                    <Link href="/search" className="text-zinc-700 dark:text-zinc-200 hover:underline">Search</Link>
                 </div>
                 <SubscriptionIndicator />
             </nav>
