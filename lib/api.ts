@@ -60,10 +60,11 @@ export async function fetchTrendingArticlesSearch() {
 
 export async function searchArticles(query: string, category?: string) {
     const params = new URLSearchParams();
-    params.set("search", query || "");
+    if (query) params.set("search", query);
     if (category && category !== "Select Category") params.set("category", category);
-    const url = `/api/articles?${params.toString()}`;
-    console.log("searchArticles params", url);
+    const paramStr = params.toString();
+    const url = `/api/articles${paramStr ? `?${paramStr}` : ''}`;
+    console.log("searchArticles url:", url);
     const res = await fetch(url);
     if (!res.ok) throw new Error("Failed to search articles");
     const data = await res.json();

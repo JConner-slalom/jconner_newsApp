@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || "https://vercel-daily-news-api.vercel.app/api";
-const API_BYPASS = process.env.API_BYPASS_TOKEN || "";
+const API_BYPASS = process.env.API_BYPASS_TOKEN || "OykROcuULI6YJwAwk3VnWv4gMMbpAq6q";
 
 export async function GET() {
     try {
