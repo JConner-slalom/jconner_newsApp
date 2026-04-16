@@ -4,8 +4,7 @@ import { Suspense } from "react";
 import { fetchTrendingArticles } from "../../../lib/api";
 import ArticlesGridDisplay from "@/app/components/articlesGridDisplay";
 import ArticleDetail from "@/app/components/articleDetail";
-
-
+export { generateMetadata } from "@/app/components/articleMetadata";
 
 export default function ArticleDetailPage({ params }: { params: Promise<{ slug: string }> }) {
     return (

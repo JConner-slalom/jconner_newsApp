@@ -1,6 +1,19 @@
 import Search from "@/app/search/components/search";
 import { Suspense } from "react";
+import type { Metadata } from "next";
 
+export const metadata: Metadata = {
+    title: "Search Page",
+    description: "Search JC News for articles",
+    openGraph: {
+        title: "Search Page",
+        description: "Search JC News for articles ",
+    },
+    twitter: {
+        title: "Search Page",
+        description: "Search JC News for articles",
+    },
+};
 
 export default function SearchPage() {
     return (
