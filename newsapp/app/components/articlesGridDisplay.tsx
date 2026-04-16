@@ -1,8 +1,19 @@
 import React from "react";
 
 type Article = {
+	id: string;
+	image?: string;
+	title: string;
+	headline?: string;
+	category: string;
+	publishedAt?: string;
+	excerpt?: string;
+	summary?: string;
+}
+
+type ArticleCardProps = {
 	image: string;
-    title: string;
+	title: string;
 	category: string;
 	date: string;
 	href: string;
@@ -27,7 +38,7 @@ export default function ArticlesGridDisplay({ featured }: ArticlesGridDisplayPro
 							image={article.image || "/pro-plan.png"}
 							category={article.category}
 							date={article.publishedAt ? new Date(article.publishedAt).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" }) : ""}
-							title={article.headline}
+							title={article.headline || article.title}
 							href={`/articles/${article.id}`}
 							excerpt={article.excerpt || article.summary || ""}
 						/>
@@ -40,7 +51,7 @@ export default function ArticlesGridDisplay({ featured }: ArticlesGridDisplayPro
 	);
 }
 
-function ArticleCard({ image, title, category, date, href, excerpt }: Article) {
+function ArticleCard({ image, title, category, date, href, excerpt }: ArticleCardProps) {
 	return (
 		<a href={href} className="block rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-4 hover:shadow-lg transition">
 			<img src={image} alt={title} className="w-full h-32 object-cover rounded mb-3" />

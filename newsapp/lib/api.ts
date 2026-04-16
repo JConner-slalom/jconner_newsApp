@@ -1,8 +1,8 @@
 // lib/api.ts
 // Utility functions for fetching news data from the Vercel Daily News API
 
-const API_BASE = "https://vercel-daily-news-api.vercel.app/api";
-const API_BYPASS = "OykROcuULI6YJwAwk3VnWv4gMMbpAq6q"; // Replace with your provided token if needed
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || "https://vercel-daily-news-api.vercel.app/api";
+const API_BYPASS = process.env.API_BYPASS_TOKEN || "OykROcuULI6YJwAwk3VnWv4gMMbpAq6q";
 
 export async function fetchFeaturedArticles() {
     const res = await fetch(`${API_BASE}/articles?featured=true`, {
