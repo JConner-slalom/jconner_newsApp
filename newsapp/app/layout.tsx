@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import SubscriptionIndicator from "./components/subButton";
 import { SubscriptionProvider } from "./context/subscriptionContext";
+import { Suspense } from "react";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -29,7 +30,9 @@ export default function RootLayout({
                 <SubscriptionProvider>
                     <Header />
                     <main className="flex-1 w-full max-w-6xl mx-auto px-4 py-6">{children}</main>
-                    <Footer />
+                    <Suspense fallback={<div className="w-full h-20 bg-zinc-200 animate-pulse rounded mt-8" />}>
+                        <Footer />
+                    </Suspense>
                 </SubscriptionProvider>
             </body>
         </html>

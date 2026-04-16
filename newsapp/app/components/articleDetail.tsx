@@ -2,6 +2,7 @@
 import ArticlePageDetailUnsubscribed from "./articlePageDetailUnsubscribed";
 import ArticlesPageDetail from "./articlePageDetail";
 import { cookies } from "next/headers";
+import { Suspense } from "react";
 
 
 export default async function ArticleDetail({ id }: { id: string }) {
@@ -9,8 +10,16 @@ export default async function ArticleDetail({ id }: { id: string }) {
     const subscription = subscriptionCookie.get("subscribed")?.value === "true";
 
     if (!subscription) {
-        return <ArticlePageDetailUnsubscribed id={id} />;
+        return (
+            <Suspense fallback={<div className="text-center py-8 text-zinc-500">Loading article...</div>}>
+                <ArticlePageDetailUnsubscribed id={id} />
+            </Suspense>
+        );
     } else {
-        return <ArticlesPageDetail id={id} />;
+        return (
+            <Suspense fallback={<div className="text-center py-8 text-zinc-500">Loading article...</div>}>
+                <ArticlesPageDetail id={id} />
+            </Suspense>
+        );
     }
 }

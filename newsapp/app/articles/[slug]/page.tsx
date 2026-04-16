@@ -7,13 +7,11 @@ import ArticleDetail from "@/app/components/articleDetail";
 
 
 
-export default async function ArticleDetailPage({ params }: { params: Promise<{ slug: string }> }) {
-    const { slug } = await params;
+export default function ArticleDetailPage({ params }: { params: Promise<{ slug: string }> }) {
     return (
         <div className="py-12 max-w-4xl mx-auto">
-            <h1 className="text-2xl font-bold mb-4">Article Detail</h1>
             <Suspense fallback={<ArticleDetailSkeleton />}>
-                <ArticleDetail id={slug} />
+                <ArticleDetailContent params={params} />
             </Suspense>
 
             <h2 className="text-xl font-semibold mb-4">Trending Articles</h2>
@@ -24,6 +22,7 @@ export default async function ArticleDetailPage({ params }: { params: Promise<{ 
     );
 }
 
+
 function ArticleDetailSkeleton() {
     return (
         <div className="space-y-4 animate-pulse">
@@ -33,6 +32,16 @@ function ArticleDetailSkeleton() {
             <div className="h-4 w-4/6 bg-zinc-200 rounded" />
             <div className="h-4 w-3/6 bg-zinc-200 rounded" />
         </div>
+    );
+}
+
+async function ArticleDetailContent({ params }: { params: Promise<{ slug: string }> }) {
+    const { slug } = await params;
+    return (
+        <>
+            <h1 className="text-2xl font-bold mb-4">Article Detail</h1>
+            <ArticleDetail id={slug} />
+        </>
     );
 }
 
@@ -47,6 +56,7 @@ function TrendingArticlesSkeleton() {
 }
 
 async function TrendingArticlesSection() {
+    'use cache'
     let trending: any[] = [];
     try {
         trending = await fetchTrendingArticles();

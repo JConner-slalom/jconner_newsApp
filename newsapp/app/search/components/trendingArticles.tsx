@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { fetchTrendingArticlesSearch } from "../../../lib/api";
 import ArticlesGridDisplay from "@/app/search/components/articlesGridDisplay";
