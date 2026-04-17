@@ -1,6 +1,3 @@
-// lib/api.ts
-// Utility functions for fetching news data from the Vercel Daily News API
-
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || "https://vercel-daily-news-api.vercel.app/api";
 const API_BYPASS = process.env.API_BYPASS_TOKEN || "";
 

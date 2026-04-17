@@ -1,4 +1,3 @@
-
 import ArticlePageDetailUnsubscribed from "./articlePageDetailUnsubscribed";
 import ArticlesPageDetail from "./articlePageDetail";
 import { cookies } from "next/headers";

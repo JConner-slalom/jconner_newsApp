@@ -1,5 +1,3 @@
-
-
 import { Suspense } from "react";
 import { fetchBreakingNews, fetchFeaturedArticles } from "../lib/api";
 import ArticlesGridDisplay from "./components/articlesGridDisplay";
