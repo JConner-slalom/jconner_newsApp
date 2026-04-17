@@ -56,7 +56,7 @@ function TrendingArticlesSection() {
     }
     return (
         <>
-            <div className="text-lg font-semibold mb-4 text-left">Trending Articles</div>
+            <div className="text-lg font-semibold mb-4 text-left">Recent Articles</div>
             <ArticlesGridDisplay featured={trending} />
         </>
     );
