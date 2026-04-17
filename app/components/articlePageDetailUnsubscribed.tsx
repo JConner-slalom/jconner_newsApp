@@ -32,7 +32,7 @@ export default async function ArticlePageDetailUnsubscribed({ id }: { id: string
         return <div className="text-red-500">Failed to load article.</div>;
     }
     if (!article) {
-        return <div className="text-zinc-500">Article not found.</div>;
+        return <div className="text-zinc-600">Article not found.</div>;
     }
 
     return (
@@ -46,12 +46,12 @@ export default async function ArticlePageDetailUnsubscribed({ id }: { id: string
                     <img src={article.author.avatar} alt={article.author.name} className="w-8 h-8 rounded-full" />
                 )}
                 <span className="font-medium">{article.author?.name}</span>
-                <span className="text-zinc-400">&bull;</span>
-                <span className="text-zinc-400">
+                <span className="text-zinc-600">&bull;</span>
+                <span className="text-zinc-600">
                     {article.publishedAt ? new Date(article.publishedAt).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" }) : ""}
                 </span>
-                <span className="text-zinc-400">&bull;</span>
-                <span className="uppercase text-xs tracking-wide bg-zinc-100 dark:bg-zinc-800 px-2 py-1 rounded">
+                <span className="text-zinc-600">&bull;</span>
+                <span className="uppercase text-xs tracking-wide bg-zinc-100 dark:bg-zinc-200 px-2 py-1 rounded">
                     {article.category}
                 </span>
             </div>
@@ -61,7 +61,7 @@ export default async function ArticlePageDetailUnsubscribed({ id }: { id: string
             {article.tags?.length > 0 && (
                 <div className="mt-6 flex flex-wrap gap-2">
                     {article.tags.map((tag) => (
-                        <span key={tag} className="bg-zinc-200 dark:bg-zinc-700 text-xs px-2 py-1 rounded">{tag}</span>
+                        <span key={tag} className="bg-zinc-200 dark:bg-zinc-200 text-xs px-2 py-1 rounded">{tag}</span>
                     ))}
                 </div>
             )}

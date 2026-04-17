@@ -114,6 +114,7 @@ export default function SearchComponent() {
     }
 
     return (
+
         <div>
         <form className="flex flex-col sm:flex-row gap-3 items-stretch" onSubmit={e => { e.preventDefault(); handleSearch(); }}>
             <SearchInput
@@ -121,16 +122,19 @@ export default function SearchComponent() {
                 onChange={handleInput}
                 onEnter={handleSearch}
             />
+            <SearchButton loading={loading} />
+        </form>
+        <div className="mt-3">
+            <div className="text-sm font-medium mb-1">Refine by Category:</div>
             <CategorySelect
                 value={category}
                 onChange={handleCategory}
                 categories={CATEGORIES}
             />
-            <SearchButton loading={loading} />
-        </form>
+        </div>
 
         {loading && (
-            <div className="text-center text-zinc-500 py-8">Loading...</div>
+            <div className="text-center text-zinc-600 py-8">Loading...</div>
         )}
 
         {!loading && error && (
@@ -138,7 +142,7 @@ export default function SearchComponent() {
         )}
 
         {!loading && hasSearched && !error && results.length === 0 && (
-            <div className="text-center text-zinc-500 py-8">No articles found for your search.</div>
+            <div className="text-center text-zinc-600 py-8">No articles found for your search.</div>
         )}
 
         {!loading && hasSearched && results.length > 0 && (

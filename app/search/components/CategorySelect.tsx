@@ -10,7 +10,7 @@ type CategorySelectProps = {
 function CategorySelect({ value, onChange, categories }: CategorySelectProps) {
 	return (
 		<select
-			className="border border-zinc-300 dark:border-zinc-700 rounded px-4 py-2 bg-white dark:bg-zinc-900"
+			className="border border-zinc-300 dark:border-zinc-700 rounded px-4 py-2 bg-white"
 			value={value}
 			onChange={e => onChange(e.target.value)}
 		>

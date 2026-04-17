@@ -29,7 +29,7 @@ export default function Home() {
             <section className="flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-16 py-8">
                 <div className="flex-1">
                     <h1 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">JC News in partnership with Vercel</h1>
-                    <p className="text-lg text-zinc-600 dark:text-zinc-400 mb-6 max-w-xl">
+                    <p className="text-lg text-zinc-600 dark:text-zinc-700 mb-6 max-w-xl">
                       News you can trust, quick reads and detailed coverage for what matters to you
                     </p>
                 </div>
@@ -81,7 +81,7 @@ function FeaturedArticlesSkeleton() {
         <section className="mt-8">
             <div className="flex items-center justify-between mb-4">
                 <h2 className="text-xl font-semibold">Featured</h2>
-                <span className="text-sm text-zinc-500">Loading...</span>
+                <span className="text-sm text-zinc-600">Loading...</span>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {[...Array(3)].map((_, i) => (
@@ -97,5 +97,5 @@ async function FeaturedArticlesSection() {
     try {
         featured = await fetchFeaturedArticles();
     } catch {}
-    return <ArticlesGridDisplay featured={featured} />;
+    return <ArticlesGridDisplay featured={featured} sectionTitle="Featured Articles"/>;
 }

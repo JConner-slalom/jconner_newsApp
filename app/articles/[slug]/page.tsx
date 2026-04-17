@@ -13,7 +13,6 @@ export default function ArticleDetailPage({ params }: { params: Promise<{ slug: 
                 <ArticleDetailContent params={params} />
             </Suspense>
 
-            <h2 className="text-xl font-semibold mb-4">Trending Articles</h2>
             <Suspense fallback={<TrendingArticlesSkeleton />}>
                 <TrendingArticlesSection />
             </Suspense>
@@ -37,10 +36,9 @@ function ArticleDetailSkeleton() {
 async function ArticleDetailContent({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
     return (
-        <>
-            <h1 className="text-2xl font-bold mb-4">Article Detail</h1>
+        <div className="bg-white/90 rounded-xl shadow p-6 mb-8">
             <ArticleDetail id={slug} />
-        </>
+        </div>
     );
 }
 
@@ -60,7 +58,7 @@ async function TrendingArticlesSection() {
     try {
         trending = await fetchTrendingArticles();
     } catch {}
-    return <ArticlesGridDisplay featured={trending} />;
+    return <ArticlesGridDisplay featured={trending} sectionTitle="Trending Articles" />;
 }
 
 

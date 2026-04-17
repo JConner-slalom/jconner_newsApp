@@ -43,7 +43,7 @@ export default function ArticlesGridDisplay({ featured }: ArticlesGridDisplayPro
                         />
                     ))
                 ) : (
-                    <div className="col-span-3 text-center text-zinc-500">No featured articles found.</div>
+                    <div className="col-span-3 text-center text-zinc-600">No featured articles found.</div>
                 )}
             </div>
         </section>
@@ -52,11 +52,11 @@ export default function ArticlesGridDisplay({ featured }: ArticlesGridDisplayPro
 
 function ArticleCard({ image, category, date, title, href, excerpt }: ArticleCardProps) {
     return (
-        <Link href={href} className="block rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-4 hover:shadow-lg transition">
+        <Link href={href} className="block rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white p-4 hover:shadow-lg transition">
             <img src={image} alt={title} className="w-full h-32 object-cover rounded mb-3" />
-            <div className="text-xs text-zinc-500 mb-1 uppercase tracking-wide">{category} • {date}</div>
+            <div className="text-xs text-zinc-600 mb-1 uppercase tracking-wide">{category} • {date}</div>
             <div className="font-semibold text-lg mb-1 line-clamp-2">{title}</div>
-            <div className="text-sm text-zinc-600 dark:text-zinc-400 line-clamp-2">{excerpt}</div>
+            <div className="text-sm text-zinc-600 dark:text-zinc-600 line-clamp-2">{excerpt}</div>
         </Link>
     );
 }

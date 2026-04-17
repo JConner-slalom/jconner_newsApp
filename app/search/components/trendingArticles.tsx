@@ -33,7 +33,7 @@ function TrendingArticlesSection() {
     if (trending === null) {
         return (
             <>
-                <div className="text-lg font-semibold mb-4 text-left">Trending Articles</div>
+                <div className="text-lg font-semibold mb-4 text-left">Recent Articles</div>
                 <section className="mt-8">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         {[...Array(5)].map((_, i) => (

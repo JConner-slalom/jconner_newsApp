@@ -11,13 +11,13 @@ export default async function ArticleDetail({ id }: { id: string }) {
 
     if (!subscription) {
         return (
-            <Suspense fallback={<div className="text-center py-8 text-zinc-500">Loading article...</div>}>
+            <Suspense fallback={<div className="text-center py-8 text-zinc-600">Loading article...</div>}>
                 <ArticlePageDetailUnsubscribed id={id} />
             </Suspense>
         );
     } else {
         return (
-            <Suspense fallback={<div className="text-center py-8 text-zinc-500">Loading article...</div>}>
+            <Suspense fallback={<div className="text-center py-8 text-zinc-600">Loading article...</div>}>
                 <ArticlesPageDetail id={id} />
             </Suspense>
         );
