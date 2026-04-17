@@ -49,23 +49,23 @@ export default function SearchComponent() {
         router.replace(`/search?${paramStr}`);
     }, [query, category, router]);
 
-    // Perform search when query/category changes
+    // Only auto-search if query length is 3 chars or greater
     useEffect(() => {
-        if (!query && (!category || category === "Select Category")) {
+        if (query.length === 0 && (!category || category === "Select Category")) {
             setHasSearched(false);
             setResults([]);
             setError("");
             return;
         }
-        setHasSearched(true);
-        setLoading(true);
-        setError("");
-        if (debounce.current) clearTimeout(debounce.current);
-        debounce.current = window.setTimeout(() => {
-            if (query.length >= 3 || (query.length === 0 && category !== "Select Category")) {
+
+        if (query.length >= 3) {
+            setHasSearched(true);
+            setLoading(true);
+            setError("");
+            if (debounce.current) clearTimeout(debounce.current);
+            debounce.current = window.setTimeout(() => {
                 searchArticles(query, category && category !== "Select Category" ? category : undefined)
                 .then((res) => {
-                    console.log("searchArticles response", res);
                     setResults(res ? res.slice(0, 5) : []);
                     setLoading(false);
                 })
@@ -74,12 +74,12 @@ export default function SearchComponent() {
                     setError("Failed to fetch search results.");
                     setLoading(false);
                 });
-            } else {
-                setResults([]);
-                setLoading(false);
-                setError("");
-            }
-        }, query.length >= 3 ? 350 : 0);
+            }, 350);
+        } else {
+            setResults([]);
+            setLoading(false);
+            setError("");
+        }
     }, [query, category]);
 
 
