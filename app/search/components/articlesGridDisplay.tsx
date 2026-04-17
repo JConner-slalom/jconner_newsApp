@@ -36,7 +36,7 @@ export default function ArticlesGridDisplay({ featured }: ArticlesGridDisplayPro
                             key={article.id}
                             image={article.image || "/pro-plan.png"}
                             category={article.category}
-                            date={article.publishDate ? new Date(article.publishDate).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" }) : ""}
+							date={article.publishedAt ? new Date(article.publishedAt).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" }) : ""}
                             title={article.headline || article.title}
                             href={`/articles/${article.id}`}
                             excerpt={article.excerpt || article.summary || ""}
