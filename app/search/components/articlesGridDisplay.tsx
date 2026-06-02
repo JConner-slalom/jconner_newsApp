@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 type Article = {
     id: string;
@@ -53,7 +54,7 @@ export default function ArticlesGridDisplay({ featured }: ArticlesGridDisplayPro
 function ArticleCard({ image, category, date, title, href, excerpt }: ArticleCardProps) {
     return (
         <Link href={href} className="block rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white p-4 hover:shadow-lg transition">
-            <img src={image} alt={title} className="w-full h-32 object-cover rounded mb-3" />
+            <Image src={image} alt={title} width={640} height={256} className="w-full h-32 object-cover rounded mb-3" />
             <div className="text-xs text-zinc-600 mb-1 uppercase tracking-wide">{category} • {date}</div>
             <div className="font-semibold text-lg mb-1 line-clamp-2">{title}</div>
             <div className="text-sm text-zinc-600 dark:text-zinc-600 line-clamp-2">{excerpt}</div>

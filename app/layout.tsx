@@ -5,6 +5,7 @@ import SubscriptionIndicator from "./components/subButton";
 import Link from "next/link";
 import { SubscriptionProvider } from "./context/subscriptionContext";
 import { Suspense } from "react";
+import Image from "next/image";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -46,7 +47,7 @@ function Header() {
             <nav className="flex items-center justify-between max-w-6xl mx-auto px-4 py-4">
                 <div className="flex items-center gap-4">
                     <Link href="/" className="flex items-center">
-                        <img src="/jc.svg" alt="JC Logo" className="h-7 w-auto" />
+                        <Image src="/jc.svg" alt="JC Logo" width={28} height={28} className="h-7 w-auto" />
                     </Link>
                     <Link href="/" className="text-zinc-700 dark:text-zinc-200 hover:underline">Home</Link>
                     <Link href="/search" className="text-zinc-700 dark:text-zinc-200 hover:underline">Search</Link>
