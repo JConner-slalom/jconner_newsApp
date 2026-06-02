@@ -1,10 +1,13 @@
-
-
 import { Suspense } from "react";
 import { fetchTrendingArticles } from "../../../lib/api";
 import ArticlesGridDisplay from "@/app/components/articlesGridDisplay";
 import ArticleDetail from "@/app/components/articleDetail";
+import { fetchArticleStaticParams } from "@/app/api/articles/articleDetails/route";
 export { generateMetadata } from "@/app/components/articleMetadata";
+
+export async function generateStaticParams(): Promise<{ slug: string }[]> {
+    return fetchArticleStaticParams();
+}
 
 export default function ArticleDetailPage({ params }: { params: Promise<{ slug: string }> }) {
     return (
@@ -20,7 +23,6 @@ export default function ArticleDetailPage({ params }: { params: Promise<{ slug: 
     );
 }
 
-
 function ArticleDetailSkeleton() {
     return (
         <div className="space-y-4 animate-pulse">
@@ -35,9 +37,11 @@ function ArticleDetailSkeleton() {
 
 async function ArticleDetailContent({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
+    const staticSlugs = (await generateStaticParams()).map((item) => item.slug);
+
     return (
         <div className="bg-white/90 rounded-xl shadow p-6 mb-8">
-            <ArticleDetail id={slug} />
+            <ArticleDetail id={slug} preRendering={staticSlugs} />
         </div>
     );
 }
