@@ -1,117 +1,23 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { searchArticles } from "../../../lib/api";
-import ArticlesGridDisplay from "@/app/search/components/articlesGridDisplay";
 import SearchInput from "@/app/search/components/SearchInput";
 import CategorySelect from "@/app/search/components/CategorySelect";
 import SearchButton from "@/app/search/components/SearchButton";
-import TrendingArticlesSection from "@/app/search/components/trendingArticles";
-
-
-const CATEGORIES = [
-    "Select Category",
-    "customers",
-    "community",
-    "company-news",
-    "changelog",
-    "engineering",
-];
+import SearchContent from "@/app/search/components/SearchContent";
+import { handleSearchResults } from "@/app/search/components/handleSearch";
+import { Categories } from "@/app/search/components/searchConstants";
 
 export default function SearchComponent() {
-    const router = useRouter();
-    const searchParams = useSearchParams();
-    const [query, setQuery] = useState(getInitialQuery);
-    const [category, setCategory] = useState(getInitialCategory);
-    const [results, setResults] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState("");
-    const [hasSearched, setHasSearched] = useState(getInitialHasSearched);
-    const debounce = useRef<number | null>(null);
-
-
-    function getInitialQuery() {
-        return searchParams.get("q") || "";
-    }
-    function getInitialCategory() {
-        return searchParams.get("category") || "Select Category";
-    }
-
-    function getInitialHasSearched() {
-        return !!searchParams.get("q") || !!searchParams.get("category");
-    }
-    // Sync state with URL
-    useEffect(() => {
-        const params = new URLSearchParams();
-        if (query) params.set("q", query);
-        if (category && category !== "Select Category") params.set("category", category);
-        const paramStr = params.toString();
-        router.replace(`/search?${paramStr}`);
-    }, [query, category, router]);
-
-    // Only auto-search if query length is 3 chars or greater
-    useEffect(() => {
-        if (query.length === 0 && (!category || category === "Select Category")) {
-            setHasSearched(false);
-            setResults([]);
-            setError("");
-            return;
-        }
-
-        if (query.length >= 3) {
-            setHasSearched(true);
-            setLoading(true);
-            setError("");
-            if (debounce.current) clearTimeout(debounce.current);
-            debounce.current = window.setTimeout(() => {
-                searchArticles(query, category && category !== "Select Category" ? category : undefined)
-                .then((res) => {
-                    setResults(res ? res.slice(0, 5) : []);
-                    setLoading(false);
-                })
-                .catch(() => {
-                    setResults([]);
-                    setError("Failed to fetch search results.");
-                    setLoading(false);
-                });
-            }, 350);
-        } else {
-            setResults([]);
-            setLoading(false);
-            setError("");
-        }
-    }, [query, category]);
-
-
-    const handleInput = (value: string) => {
-        setQuery(value);
-    };
-
-    const handleCategory = (value: string) => {
-        setCategory(value);
-    };
-
-    function handleSearch() {
-        if (query.length === 0 && (category === "Select Category" || !category)) {
-            setHasSearched(false);
-            setResults([]);
-            setError("");
-            return;
-        }
-        setHasSearched(true);
-        setLoading(true);
-        setError("");
-        searchArticles(query, category && category !== "Select Category" ? category : undefined)
-        .then((res) => {
-            setResults(res ? res.slice(0, 5) : []);
-            setLoading(false);
-        })
-        .catch(() => {
-            setResults([]);
-            setError("Failed to fetch search results.");
-            setLoading(false);
-        });
-    }
+    const {
+        query,
+        category,
+        results,
+        loading,
+        error,
+        hasSearched,
+        handleInput,
+        handleCategory,
+        handleSearch,
+    } = handleSearchResults();
 
     return (
 
@@ -129,29 +35,11 @@ export default function SearchComponent() {
             <CategorySelect
                 value={category}
                 onChange={handleCategory}
-                categories={CATEGORIES}
+                categories={Categories}
             />
         </div>
 
-        {loading && (
-            <div className="text-center text-zinc-600 py-8">Loading...</div>
-        )}
-
-        {!loading && error && (
-            <div className="text-center text-red-500 py-8">{error}</div>
-        )}
-
-        {!loading && hasSearched && !error && results.length === 0 && (
-            <div className="text-center text-zinc-600 py-8">No articles found for your search.</div>
-        )}
-
-        {!loading && hasSearched && results.length > 0 && (
-            <ArticlesGridDisplay featured={results} />
-        )}
-
-        {!loading && !hasSearched && (
-            <TrendingArticlesSection />
-        )}
+        <SearchContent loading={loading} error={error} hasSearched={hasSearched} results={results} />
         </div>
     );
 }
