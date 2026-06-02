@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { fetchTrendingArticles } from "../../../lib/api";
 import ArticlesGridDisplay from "@/app/components/articlesGridDisplay";
 import ArticleDetail from "@/app/components/articleDetail";
-import { fetchArticleStaticParams } from "@/app/api/articles/articleDetails/route";
+import { fetchArticleStaticParams } from "@/app/api/articles/articleDetails/fetchArticleStaticParams";
 export { generateMetadata } from "@/app/components/articleMetadata";
 
 export async function generateStaticParams(): Promise<{ slug: string }[]> {
