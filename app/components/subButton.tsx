@@ -1,3 +1,4 @@
+"use client";
 import { useSubscription } from "@/app/context/subscriptionContext";
 import { useRouter } from "next/navigation";
 
