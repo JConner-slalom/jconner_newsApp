@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { fetchTrendingArticlesSearch } from "../../../lib/api";
+import { fetchTrendingArticlesSearch } from "@/lib/searchAPI";
 import ArticlesGridDisplay from "@/app/search/components/articlesGridDisplay";
 
 export default function TrendingArticles() {

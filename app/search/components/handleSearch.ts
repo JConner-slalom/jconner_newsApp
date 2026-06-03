@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { searchArticles } from "../../../lib/api";
+import { searchArticles } from "@/lib/searchAPI";
 import { defaultCat, type SearchArticle } from "@/app/search/components/searchConstants";
 
 export function handleSearchResults() {
